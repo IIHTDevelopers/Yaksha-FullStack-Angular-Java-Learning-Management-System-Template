@@ -47,10 +47,10 @@ public class ControllerTest {
 	}
 
 	@Test
-	public void testCreateUser() throws Exception {
+	public void testCreateLMS() throws Exception {
 		LMSDTO lmsDTO = MasterData.getLMSDto();
-		LMS savedUser = MasterData.getLMS();
-		savedUser.setId(lmsDTO.getId());
+		LMS savedLMS = MasterData.getLMS();
+		savedLMS.setId(lmsDTO.getId());
 
 		when(lmsService.createLMS(any())).thenReturn(lmsDTO);
 		RequestBuilder requestBuilder = MockMvcRequestBuilders.post("/lms").content(MasterData.asJsonString(lmsDTO))
@@ -58,14 +58,14 @@ public class ControllerTest {
 
 		MvcResult result = mockMvc.perform(requestBuilder).andReturn();
 		yakshaAssert(currentTest(),
-				(result.getResponse().getContentAsString().contentEquals(MasterData.asJsonString(savedUser)) ? "true"
+				(result.getResponse().getContentAsString().contentEquals(MasterData.asJsonString(savedLMS)) ? "true"
 						: "false"),
 				businessTestFile);
 
 	}
 
 	@Test
-	public void testCreateUserIsServiceMethodCalled() throws Exception {
+	public void testCreateLMSIsServiceMethodCalled() throws Exception {
 		final int count[] = new int[1];
 		LMSDTO lmsDTO = MasterData.getLMSDto();
 		LMS savedLms = MasterData.getLMS();
@@ -90,25 +90,25 @@ public class ControllerTest {
 	}
 
 	@Test
-	public void testGetAllUsers() throws Exception {
-		List<LMSDTO> users = MasterData.getLMSDTOList();
+	public void testGetAllLMSs() throws Exception {
+		List<LMSDTO> LMSs = MasterData.getLMSDTOList();
 
-		when(this.lmsService.getAllLMS()).thenReturn(users);
+		when(this.lmsService.getAllLMS()).thenReturn(LMSs);
 		RequestBuilder requestBuilder = MockMvcRequestBuilders.get("/lms").contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON);
 
 		MvcResult result = mockMvc.perform(requestBuilder).andReturn();
 		yakshaAssert(currentTest(),
-				(result.getResponse().getContentAsString().contentEquals(MasterData.asJsonString(users)) ? "true"
+				(result.getResponse().getContentAsString().contentEquals(MasterData.asJsonString(LMSs)) ? "true"
 						: "false"),
 				businessTestFile);
 
 	}
 
 	@Test
-	public void testGetAllUsersIsServiceMethodCalled() throws Exception {
+	public void testGetAllLMSsIsServiceMethodCalled() throws Exception {
 		final int count[] = new int[1];
-		List<LMS> users = MasterData.getLMSList();
+		List<LMS> LMSs = MasterData.getLMSList();
 
 		when(this.lmsService.getAllLMS()).then(new Answer<List<LMS>>() {
 
@@ -116,7 +116,7 @@ public class ControllerTest {
 			public List<LMS> answer(InvocationOnMock invocation) throws Throwable {
 				// TODO Auto-generated method stub
 				count[0]++;
-				return users;
+				return LMSs;
 			}
 		});
 		RequestBuilder requestBuilder = MockMvcRequestBuilders.get("/lms/").contentType(MediaType.APPLICATION_JSON)
@@ -129,7 +129,7 @@ public class ControllerTest {
 	}
 
 	@Test
-	public void testGetUserById() throws Exception {
+	public void testGetLMSById() throws Exception {
 		LMSDTO lmsDTO = MasterData.getLMSDto();
 		when(this.lmsService.getLMSById(lmsDTO.getId())).thenReturn(lmsDTO);
 		RequestBuilder requestBuilder = MockMvcRequestBuilders.get("/lms/" + lmsDTO.getId())
@@ -144,7 +144,7 @@ public class ControllerTest {
 	}
 
 	@Test
-	public void testGetUserByIdIsServiceMethodCalled() throws Exception {
+	public void testGetLMSByIdIsServiceMethodCalled() throws Exception {
 		final int count[] = new int[1];
 		LMS lms = MasterData.getLMS();
 		LMSDTO lmsDTO = MasterData.getLMSDto();
@@ -167,30 +167,30 @@ public class ControllerTest {
 	}
 
 	@Test
-	public void testUpdateUser() throws Exception {
-		LMSDTO userDTO = MasterData.getLMSDto();
-		LMS updatedUser = MasterData.getLMS();
-		updatedUser.setId(userDTO.getId());
+	public void testUpdateLMS() throws Exception {
+		LMSDTO LMSDTO = MasterData.getLMSDto();
+		LMS updatedLMS = MasterData.getLMS();
+		updatedLMS.setId(LMSDTO.getId());
 
-		when(this.lmsService.updateLMS(eq(userDTO.getId()), any())).thenReturn(userDTO);
-		RequestBuilder requestBuilder = MockMvcRequestBuilders.put("/lms/" + userDTO.getId())
-				.content(MasterData.asJsonString(updatedUser)).contentType(MediaType.APPLICATION_JSON)
+		when(this.lmsService.updateLMS(eq(LMSDTO.getId()), any())).thenReturn(LMSDTO);
+		RequestBuilder requestBuilder = MockMvcRequestBuilders.put("/lms/" + LMSDTO.getId())
+				.content(MasterData.asJsonString(updatedLMS)).contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON);
 
 		MvcResult result = mockMvc.perform(requestBuilder).andReturn();
 		yakshaAssert(currentTest(),
-				(result.getResponse().getContentAsString().contentEquals(MasterData.asJsonString(updatedUser)) ? "true"
+				(result.getResponse().getContentAsString().contentEquals(MasterData.asJsonString(updatedLMS)) ? "true"
 						: "false"),
 				businessTestFile);
 
 	}
 
 	@Test
-	public void testUpdateUserIsServiceMethodCalled() throws Exception {
+	public void testUpdateLMSIsServiceMethodCalled() throws Exception {
 		final int count[] = new int[1];
 		LMSDTO lmsDTO = MasterData.getLMSDto();
-		LMS lmsUser = MasterData.getLMS();
-		lmsUser.setId(lmsDTO.getId());
+		LMS lmsLMS = MasterData.getLMS();
+		lmsLMS.setId(lmsDTO.getId());
 
 		when(this.lmsService.updateLMS(eq(lmsDTO.getId()), any())).then(new Answer<LMSDTO>() {
 
@@ -202,7 +202,7 @@ public class ControllerTest {
 			}
 		});
 		RequestBuilder requestBuilder = MockMvcRequestBuilders.put("/lms/" + lmsDTO.getId())
-				.content(MasterData.asJsonString(lmsUser)).contentType(MediaType.APPLICATION_JSON)
+				.content(MasterData.asJsonString(lmsLMS)).contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON);
 
 		MvcResult result = mockMvc.perform(requestBuilder).andReturn();
@@ -212,10 +212,10 @@ public class ControllerTest {
 	}
 
 	@Test
-	public void testDeleteUser() throws Exception {
-		LMSDTO userDTO = MasterData.getLMSDto();
-		when(this.lmsService.deleteLMS(userDTO.getId())).thenReturn(true);
-		RequestBuilder requestBuilder = MockMvcRequestBuilders.delete("/lms/" + userDTO.getId())
+	public void testDeleteLMS() throws Exception {
+		LMSDTO LMSDTO = MasterData.getLMSDto();
+		when(this.lmsService.deleteLMS(LMSDTO.getId())).thenReturn(true);
+		RequestBuilder requestBuilder = MockMvcRequestBuilders.delete("/lms/" + LMSDTO.getId())
 				.contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON);
 
 		MvcResult result = mockMvc.perform(requestBuilder).andReturn();
@@ -225,10 +225,10 @@ public class ControllerTest {
 	}
 
 	@Test
-	public void testDeleteUserIsServiceMethodCalled() throws Exception {
+	public void testDeleteLMSIsServiceMethodCalled() throws Exception {
 		final int count[] = new int[1];
-		LMSDTO userDTO = MasterData.getLMSDto();
-		when(this.lmsService.deleteLMS(userDTO.getId())).then(new Answer<Boolean>() {
+		LMSDTO LMSDTO = MasterData.getLMSDto();
+		when(this.lmsService.deleteLMS(LMSDTO.getId())).then(new Answer<Boolean>() {
 
 			@Override
 			public Boolean answer(InvocationOnMock invocation) throws Throwable {
@@ -237,7 +237,7 @@ public class ControllerTest {
 				return true;
 			}
 		});
-		RequestBuilder requestBuilder = MockMvcRequestBuilders.delete("/lms/" + userDTO.getId())
+		RequestBuilder requestBuilder = MockMvcRequestBuilders.delete("/lms/" + LMSDTO.getId())
 				.contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON);
 
 		MvcResult result = mockMvc.perform(requestBuilder).andReturn();
@@ -247,26 +247,26 @@ public class ControllerTest {
 	}
 
 	@Test
-	public void testSearchUsersByTitle() throws Exception {
-		List<LMS> users = MasterData.getLMSList();
-		List<LMSDTO> usersDTO = MasterData.getLMSDTOList();
+	public void testSearchLMSsByTitle() throws Exception {
+		List<LMS> LMSs = MasterData.getLMSList();
+		List<LMSDTO> LMSsDTO = MasterData.getLMSDTOList();
 		String title = "Spring";
-		when(this.lmsService.searchLMSByTitle(title)).thenReturn(usersDTO);
+		when(this.lmsService.searchLMSByTitle(title)).thenReturn(LMSsDTO);
 		RequestBuilder requestBuilder = MockMvcRequestBuilders.get("/lms/search").queryParam("title", title)
 				.contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON);
 
 		MvcResult result = mockMvc.perform(requestBuilder).andReturn();
 		yakshaAssert(currentTest(),
-				(result.getResponse().getContentAsString().contentEquals(MasterData.asJsonString(users)) ? "true"
+				(result.getResponse().getContentAsString().contentEquals(MasterData.asJsonString(LMSs)) ? "true"
 						: "false"),
 				businessTestFile);
 
 	}
 
 	@Test
-	public void testSearchUsersByTitleIsServiceMethodCalled() throws Exception {
+	public void testSearchLMSsByTitleIsServiceMethodCalled() throws Exception {
 		final int count[] = new int[1];
-		List<LMS> users = MasterData.getLMSList();
+		List<LMS> LMSs = MasterData.getLMSList();
 		String title = "Spring";
 		when(this.lmsService.searchLMSByTitle(title)).then(new Answer<List<LMS>>() {
 
@@ -274,7 +274,7 @@ public class ControllerTest {
 			public List<LMS> answer(InvocationOnMock invocation) throws Throwable {
 				// TODO Auto-generated method stub
 				count[0]++;
-				return users;
+				return LMSs;
 			}
 		});
 		RequestBuilder requestBuilder = MockMvcRequestBuilders.get("/lms/search").queryParam("title", title)
@@ -288,32 +288,32 @@ public class ControllerTest {
 
 	
 	@Test
-	public void testSearchUsersByWithoutFilter() throws Exception {
-		List<LMS> users = MasterData.getLMSList();
-		List<LMSDTO> usersDTO = MasterData.getLMSDTOList();
-		when(this.lmsService.getAllLMS()).thenReturn(usersDTO);
+	public void testSearchLMSsByWithoutFilter() throws Exception {
+		List<LMS> LMSs = MasterData.getLMSList();
+		List<LMSDTO> LMSsDTO = MasterData.getLMSDTOList();
+		when(this.lmsService.getAllLMS()).thenReturn(LMSsDTO);
 		RequestBuilder requestBuilder = MockMvcRequestBuilders.get("/lms/search")
 				.contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON);
 
 		MvcResult result = mockMvc.perform(requestBuilder).andReturn();
 		yakshaAssert(currentTest(),
-				(result.getResponse().getContentAsString().contentEquals(MasterData.asJsonString(users)) ? "true"
+				(result.getResponse().getContentAsString().contentEquals(MasterData.asJsonString(LMSs)) ? "true"
 						: "false"),
 				businessTestFile);
 
 	}
 
 	@Test
-	public void testSearchUsersByWithoutFilterIsServiceMethodCalled() throws Exception {
+	public void testSearchLMSsByWithoutFilterIsServiceMethodCalled() throws Exception {
 		final int count[] = new int[1];
-		List<LMS> users = MasterData.getLMSList();
+		List<LMS> LMSs = MasterData.getLMSList();
 		when(this.lmsService.getAllLMS()).then(new Answer<List<LMS>>() {
 
 			@Override
 			public List<LMS> answer(InvocationOnMock invocation) throws Throwable {
 				// TODO Auto-generated method stub
 				count[0]++;
-				return users;
+				return LMSs;
 			}
 		});
 		RequestBuilder requestBuilder = MockMvcRequestBuilders.get("/lms/search")
