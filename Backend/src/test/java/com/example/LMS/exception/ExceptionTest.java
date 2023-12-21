@@ -44,7 +44,7 @@ public class ExceptionTest {
 	}
 
 	@Test
-	public void testCreateUserInvalidDataException() throws Exception {
+	public void testCreateLMSInvalidDataException() throws Exception {
 		LMSDTO lmsDTO = MasterData.getLMSDto();
 		lmsDTO.setTitle(null);
 
@@ -59,7 +59,7 @@ public class ExceptionTest {
 	}
 
 	@Test
-	public void testCreateUserWithStartDateAfterEndDateCustomException() throws Exception {
+	public void testCreateLMSWithStartDateAfterEndDateCustomException() throws Exception {
 		LMSDTO lmsDTO = MasterData.getLMSDto();
 		// start date is after 10days from today's date
 		lmsDTO.setStartDate(LocalDate.now().plusDays(10));
@@ -82,7 +82,7 @@ public class ExceptionTest {
 	}
 
 	@Test
-	public void testUpdateUserInvalidDataException() throws Exception {
+	public void testUpdateLMSInvalidDataException() throws Exception {
 		LMSDTO lmsDTO = MasterData.getLMSDto();
 		lmsDTO.setTitle(null);
 
@@ -98,7 +98,7 @@ public class ExceptionTest {
 	}
 
 	@Test
-	public void testUpdateUserWithStartDateAfterEndDateCustomException() throws Exception {
+	public void testUpdateLMSWithStartDateAfterEndDateCustomException() throws Exception {
 		LMSDTO lmsDTO = MasterData.getLMSDto();
 		lmsDTO.setStartDate(LocalDate.now().plusDays(10));
 		lmsDTO.setEndDate(LocalDate.now());
@@ -120,7 +120,7 @@ public class ExceptionTest {
 	}
 
 	@Test
-	public void testGetUserByIdResourceNotFoundException() throws Exception {
+	public void testGetLMSByIdResourceNotFoundException() throws Exception {
 		LMSDTO lmsDTO = MasterData.getLMSDto();
 		RestExceptionHandler.ErrorResponse exResponse = new RestExceptionHandler.ErrorResponse(
 				HttpStatus.BAD_REQUEST.value(), "LMS with " + lmsDTO.getId() + " not found");
@@ -138,7 +138,7 @@ public class ExceptionTest {
 	}
 
 	@Test
-	public void testDeleteUserByIdResourceNotFoundException() throws Exception {
+	public void testDeleteLMSByIdResourceNotFoundException() throws Exception {
 		LMSDTO lmsDTO = MasterData.getLMSDto();
 		lmsDTO.setId(23424234234L);
 		RestExceptionHandler.ErrorResponse exResponse = new RestExceptionHandler.ErrorResponse(
@@ -157,7 +157,7 @@ public class ExceptionTest {
 	}
 
 	@Test
-	public void testUpdateUserByIdResourceNotFoundException() throws Exception {
+	public void testUpdateLMSByIdResourceNotFoundException() throws Exception {
 		LMSDTO lmsDTO = MasterData.getLMSDto();
 		RestExceptionHandler.ErrorResponse exResponse = new RestExceptionHandler.ErrorResponse(
 				HttpStatus.BAD_REQUEST.value(), "LMS with " + lmsDTO.getId() + " not found");
